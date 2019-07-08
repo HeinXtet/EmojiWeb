@@ -1,6 +1,8 @@
 package com.heinhtet.webapp
 
 import io.ktor.application.call
+import io.ktor.freemarker.FreeMarkerContent
+import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.Route
 import io.ktor.routing.get
@@ -10,6 +12,6 @@ const val HOME = "/"
 
 fun Route.home() {
     get(HOME) {
-        this.call.respondText { "HELLO HOME" }
+        this.call.respond(FreeMarkerContent("home.ftl",null))
     }
 }
