@@ -1,15 +1,28 @@
 <#import "common/bootstrap.ftl" as b>
 <@b.page>
     <div class="container">
-        <html>
-            <body>
-                <h1>${displayName}</h1>
-                <ul>
-                    <#list phrases as phrase>
-                        <li>${phrase}</li>
-                     </#list>
-                </ul>
-            </body>
-        </html>
+              <h1>Welcome ${displayName}</h1>
+                <#if phrases??>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Emoji</th>
+                                <th>Phrases</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <#list phrases as phrase>
+                            <tr>
+                                <td>
+                                    ${phrase.emoji}
+                                </td>
+                                <td>
+                                    ${phrase.name}
+                                </td>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table>
+                </#if>
     </div>
 </@b.page>

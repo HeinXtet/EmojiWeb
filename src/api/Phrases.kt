@@ -20,17 +20,23 @@ const val PHRASES = "$API_VERSION/phrases"
 fun Route.phrases(db: Repository) {
     authenticate("auth") {
         get(PHRASES) {
-//            call.respond(db.pharses().toArray()) to return API
-            val user = call.authentication.principal as User
-            val phrases = db.pharses()
-            call.respond(FreeMarkerContent("phrases.ftl", mapOf("phrases" to phrases, "displayName" to user.displayName)))
+            if (db.pharses().count() > 0) {
+                call.respond(db.pharses()[0])
+
+            } else {
+                call.respond(db.pharses().toArray())
+            }
+//            val user = call.authentication.principal as User
+//            val phrases = db.pharses()
+//            call.respond(FreeMarkerContent("phrases.ftl", mapOf("phrases" to phrases, "displayName" to user.displayName)))
         }
 
-        post(PHRASES){
+        post(PHRASES) {
             val params = call.receiveParameters()
+            val action = params["action"] ?: throw IllegalArgumentException("Missing Parameter : action")
             val emoji = params["emoji"] ?: throw IllegalArgumentException("Missing Parameter : emoji")
             val phrase = params["phrase"] ?: throw IllegalArgumentException("Missing Parameter : phrase")
-            db.add(EmojiPhase(emoji,phrase))
+            db.add(EmojiPhase(emoji, phrase))
             call.respondRedirect(PHRASES)
         }
     }

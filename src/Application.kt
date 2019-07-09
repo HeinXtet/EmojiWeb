@@ -4,9 +4,7 @@ import com.heinhtet.api.phase
 import com.heinhtet.api.phrases
 import com.heinhtet.model.User
 import com.heinhtet.repository.InMemoryRepository
-import com.heinhtet.webapp.Phrases
-import com.heinhtet.webapp.about
-import com.heinhtet.webapp.home
+import com.heinhtet.webapp.*
 import com.ryanharter.ktor.moshi.moshi
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
@@ -46,8 +44,6 @@ fun Application.module(testing: Boolean = false) {
             )
         }
     }
-
-
     // for convector
     install(ContentNegotiation) {
         moshi()
@@ -74,9 +70,11 @@ fun Application.module(testing: Boolean = false) {
         static("static") {
             resource("images")
         }
-        home()
+        home(inMemoryRepository)
         about()
-        Phrases()
+        Phrases(inMemoryRepository)
+        signUp()
+        signIn()
 
         //API
         phase(inMemoryRepository)

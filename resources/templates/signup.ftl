@@ -1,8 +1,7 @@
-<#-- @ftlvariable name="error" type="java.lang.String" -->
 <#import "common/bootstrap.ftl" as b>
 
 <@b.page>
-  <div class="row">
+  <div class="row"style="background="red"">
     <div class="col-md-4 col-md-offset-4">
       <div class="panel panel-default">
         <div class="panel-heading">

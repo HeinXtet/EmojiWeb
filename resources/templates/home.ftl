@@ -1,6 +1,6 @@
 <#import "common/bootstrap.ftl" as b>
 <@b.page>
-    <div class="row">
+    <div class="container">
         <p>hello world</p>
     </div>
 </@b.page>
