@@ -35,6 +35,7 @@ dependencies {
     implementation 'com.ryanharter.ktor:ktor-moshi:1.0.1'
     implementation "io.ktor:ktor-freemarker:$ktor_version"
     implementation "io.ktor:ktor-auth:$ktor_version"
+    implementation "io.ktor:ktor-locations:$ktor_version"
 
 
 

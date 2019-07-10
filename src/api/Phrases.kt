@@ -2,11 +2,8 @@ package com.heinhtet.api
 
 import com.heinhtet.API_VERSION
 import com.heinhtet.model.EmojiPhase
-import com.heinhtet.model.Request
-import com.heinhtet.model.User
 import com.heinhtet.repository.Repository
 import io.ktor.application.call
-import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.get
@@ -34,10 +31,15 @@ fun Route.phrases(db: Repository) {
         post(PHRASES) {
             val params = call.receiveParameters()
             val action = params["action"] ?: throw IllegalArgumentException("Missing Parameter : action")
-            val emoji = params["emoji"] ?: throw IllegalArgumentException("Missing Parameter : emoji")
-            val phrase = params["phrase"] ?: throw IllegalArgumentException("Missing Parameter : phrase")
-            db.add(EmojiPhase(emoji, phrase))
-            call.respondRedirect(PHRASES)
+            if (action == "delete"){
+                val id = params["id"] ?: throw IllegalArgumentException("Missing Parameter : id")
+                db.remove(id)
+            }else if (action == "add"){
+                val emoji = params["emoji"] ?: throw IllegalArgumentException("Missing Parameter : emoji")
+                val phrase = params["phrase"] ?: throw IllegalArgumentException("Missing Parameter : phrase")
+                db.add(EmojiPhase(emoji, phrase))
+            }
+            call.respondRedirect("/phrases")
         }
     }
 

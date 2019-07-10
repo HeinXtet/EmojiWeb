@@ -17,8 +17,12 @@ import io.ktor.freemarker.FreeMarker
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.resource
+import io.ktor.http.content.resources
 import io.ktor.http.content.static
+import io.ktor.locations.Locations
+import io.ktor.locations.locations
 import io.ktor.response.respond
+import io.ktor.response.respondRedirect
 import io.ktor.response.respondText
 import io.ktor.routing.routing
 import javax.naming.AuthenticationException
@@ -63,12 +67,13 @@ fun Application.module(testing: Boolean = false) {
             }
         }
     }
+    install(Locations)
 
     val inMemoryRepository = InMemoryRepository()
 
     routing {
-        static("static") {
-            resource("images")
+        static("/static") {
+            resources("images")
         }
         home(inMemoryRepository)
         about()
@@ -84,3 +89,8 @@ fun Application.module(testing: Boolean = false) {
 
 
 const val API_VERSION = "/api/v1"
+
+
+suspend fun ApplicationCall.redriect(location: Any){
+    respondRedirect(application.locations.href(location))
+}
